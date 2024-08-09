@@ -474,6 +474,12 @@ uint8_t* snes_get_memory_data(unsigned type)
 	  case SNES_MEMORY_CARTRIDGE_RTC:
 	     data = RTCData.reg;
          break;
+      case SNES_MEMORY_SYSTEM_VRAM:
+         data = Memory.VRAM;
+		 break;
+      case SNES_MEMORY_SYSTEM_PPU:
+         data = (uint8_t*) &PPU;
+		 break;
 	  default:
 	     data = NULL;
 		 break;
@@ -499,6 +505,12 @@ unsigned snes_get_memory_size(unsigned type)
 		 break;
 	  case SNES_MEMORY_CARTRIDGE_RTC:
 		 size = (Settings.SRTC || Settings.SPC7110RTC)?20:0;
+		 break;
+      case SNES_MEMORY_SYSTEM_VRAM:
+		 size = 0x10000;
+		 break;
+      case SNES_MEMORY_SYSTEM_PPU:
+		 size = sizeof(SPPU);
 		 break;
 	  default:
 	     size = 0;

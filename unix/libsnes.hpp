@@ -109,6 +109,8 @@ extern "C" {
 #define SNES_MEMORY_SUFAMI_TURBO_B_RAM  5
 #define SNES_MEMORY_GAME_BOY_RAM        6
 #define SNES_MEMORY_GAME_BOY_RTC        7
+#define SNES_MEMORY_SYSTEM_VRAM         8
+#define SNES_MEMORY_SYSTEM_PPU          9
 
 ////////////////////////////////////////////////////////////////////////////}}}
 
