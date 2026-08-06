@@ -1163,6 +1163,33 @@ uint8_t* snes_get_memory_data(unsigned id);
 
 unsigned snes_get_memory_size(unsigned id);
 
+// snes_poke_wram:
+//
+//    Writes size bytes from data into the SNES's own 128KB work RAM
+//    (WRAM, banks $7E/$7F) starting at offset - a real, new capability
+//    this core never exposed before (there is no SNES_MEMORY_WRAM
+//    constant; snes_get_memory_data()/snes_get_memory_size() only ever
+//    covered cartridge-side non-volatile storage plus VRAM/PPU, never
+//    the CPU's own general-purpose RAM). Routed through the same
+//    S9xSetByte() bus write every real CPU instruction uses (not a raw
+//    Memory.RAM[] poke), so any side effects a real write to that address
+//    would have (there are none for plain WRAM, unlike a PPU register)
+//    stay correct if this is ever pointed at a different address range.
+//
+//    This requires that a cartridge is loaded.
+//
+//    Parameters:
+//
+//      offset:
+//          A WRAM offset in [0, 0x1FFFF] - wraps (mirrors) past that,
+//          matching real hardware's bank $7E/$7F mirroring.
+//      data:
+//          The bytes to write.
+//      size:
+//          How many bytes from data to write.
+
+void snes_poke_wram(unsigned offset, const uint8_t* data, unsigned size);
+
 ////////////////////////////////////////////////////////////////////////////}}}
 
 #ifdef __cplusplus
