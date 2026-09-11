@@ -488,6 +488,12 @@ uint8_t* snes_get_memory_data(unsigned type)
    return data;
 }
 
+void snes_poke_wram(unsigned offset, const uint8_t* data, unsigned size)
+{
+   for (unsigned i = 0; i < size; i++)
+      S9xSetByte(data[i], 0x7e0000 + ((offset + i) & 0x1ffff));
+}
+
 void snes_unload_cartridge()
 {
 
